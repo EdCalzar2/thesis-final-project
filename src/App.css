@@ -1,0 +1,19 @@
+.MainPage {
+    background: #86469C;
+    background: linear-gradient(0deg,rgba(134, 70, 156, 1) 0%, rgba(251, 154, 209, 1) 50%, rgba(250, 97, 148, 1) 100%);
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+}
+
+.home {
+    font-size: 50px;
+}
+
+.safetyMap {
+    font-size: 50px;
+}
+
+.story {
+    font-size: 50px;
+}
