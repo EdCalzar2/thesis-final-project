@@ -1,6 +1,9 @@
+import styles from './storyItem.module.css'
 
 export default function StoryItem({ item }) {
     return (
-        <h3>{item}</h3>
+        <div className={styles.item}>
+            <div className={styles.itemName}>{item}</div>
+        </div>
     )
 }
