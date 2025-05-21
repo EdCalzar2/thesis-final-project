@@ -1,8 +1,9 @@
 import StoryItem from './StoryItem'
+import styles from './storyList.module.css'
 
 export default function StoryList({stories}) {
     return (
-        <div>
+        <div className={styles.list}>
             {stories.map((item) => (
                 <StoryItem key={item} item={item}/>
             ))}
