@@ -1,4 +1,5 @@
 import { useState } from "react"
+import styles from './form.module.css'
 
 export default function Form({stories, setStories}) {
     const [story, setStory] = useState('')
@@ -10,9 +11,9 @@ export default function Form({stories, setStories}) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input onChange={(e) => setStory(e.target.value)} type='text' value={story}></input>
-            <button type='submit'>Submit</button>
+        <form className={styles.storyForm} onSubmit={handleSubmit}>
+            <input className={styles.modernInput} onChange={(e) => setStory(e.target.value)} type='text' value={story} placeholder="Enter your story"></input>
+            <button className={styles.modernButton} type='submit'>Submit</button>
         </form>
     )
 }
