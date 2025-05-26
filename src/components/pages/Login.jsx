@@ -18,6 +18,11 @@ export default function Login() {
       setError('Please fill out both username and password.'); // Show error if fields are empty
       return;
     }
+    else if (username === 'admin123' && password === 'g6_admin') {
+      setError('');
+      navigate('/admin'); // Redirect to the Admin page
+      return;
+    }
     setError(''); // Clear any previous error messages
     // Simulate successful login, then redirect to Home page
     navigate('/home'); // Redirect to the Home component/page
