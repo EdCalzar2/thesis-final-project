@@ -65,7 +65,7 @@ export default function Login() {
           </form>
           {/* Link for users who don't have an account */}
           <p className='account'>
-            <a href="" onClick={e => {e.preventDefault(); navigate('/signup');}}>Don't have an account?</a>
+            <a href="#" onClick={e => {e.preventDefault(); navigate('/signUp');}}>Don't have an account?</a>
           </p>
         </div>
       </div>
