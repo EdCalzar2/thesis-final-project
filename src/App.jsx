@@ -18,6 +18,7 @@ function App() {
       <Route path="/safety_map" element={<MainPage><Safety_map /></MainPage>} />
       {/* Route for the admin page, NO MainPage layout (no Navbar) */}
       <Route path="/manageStories" element={<ManageStories />} />
+      <Route path="/signUp" element={<SignUp/>}/>
     </Routes>
   );
 }
