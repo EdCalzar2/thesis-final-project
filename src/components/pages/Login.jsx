@@ -20,12 +20,12 @@ export default function Login() {
     }
     else if (username === 'admin123' && password === 'g6_admin') {
       setError('');
-      navigate('/admin'); // Redirect to the Admin page
+      navigate('/manageStories'); // Redirect to the Admin page 
       return;
     }
     setError(''); // Clear any previous error messages
     // Simulate successful login, then redirect to Home page
-    navigate('/home'); // Redirect to the Home component/page
+    navigate('/story'); // Redirect to the Home component/page
   };
 
   return (
@@ -41,9 +41,7 @@ export default function Login() {
       </div>
       <div className="right-section">
         <div className="login-box">
-          {/* Logo image */}
           <img src={finalLogo} alt="Logo" />
-          {/* Login form */}
           <form onSubmit={handleSubmit}>
             {/* Show error message if there is one */}
             {error && (
@@ -51,21 +49,18 @@ export default function Login() {
                 {error} {/*Prints the setError*/}
               </div>
             )}
-            {/* Username input */}
             <label><b>Username</b></label>
             <input
               type="text"
               value={username}
               onChange={e => setUsername(e.target.value)} // Update username state when input changes
             />
-            {/* Password input */}
             <label><b>Password</b></label>
             <input
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)} // Update password state when input changes
             />
-            {/* Submit button */}
             <button type="submit">Log in</button>
           </form>
           {/* Link for users who don't have an account */}
