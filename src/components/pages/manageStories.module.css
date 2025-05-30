@@ -1,0 +1,73 @@
+.manageStoriesBackground {
+    background: #86469C;
+    background: linear-gradient(0deg, rgb(134, 70, 156) 0%, rgba(251, 154, 209, 1) 50%, rgb(250, 97, 148) 100%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.manageStoriesBackground nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20rem;
+    height: 100vh;
+    background-color: rgb(255, 251, 242);
+    box-shadow: 0px 3px 10px black;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    z-index: 10;
+}
+
+.manageStoriesBackground ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.manageStoriesBackground li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.manageStoriesBackground ul li a {
+    display: block;
+    border-radius: 0;
+    padding: 25px;
+    margin: 0;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.manageStoriesBackground ul li a.active {
+    background-color: rgb(134, 70, 156);
+    font-weight: bold;
+    color: #fff;
+}
+
+nav ul li a:not(.active):hover {
+    background-color: rgb(134, 70, 156);
+    color: #fff;
+}
+
+.logoutBtn {
+    background: #fa6194;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 12px;
+    width: 100%;
+    text-align: left;
+}
+.logoutBtn:hover {
+    background: #c13c6e;
+}
