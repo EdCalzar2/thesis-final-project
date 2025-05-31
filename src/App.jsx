@@ -5,6 +5,7 @@ import Login from './components/pages/Login';
 import MainPage from './MainPage'; 
 import { Story, Safety_map } from './components/pages'; 
 import ManageStories from './components/pages/ManageStories';
+import SignUp from './components/pages/SignUp';
 
 function App() { 
   const [stories, setStories] = useState([]);
