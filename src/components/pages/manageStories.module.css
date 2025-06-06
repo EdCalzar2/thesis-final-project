@@ -2,9 +2,9 @@
 .manageStoriesBackground {
     background: #86469C;
     background: linear-gradient(0deg,rgba(134, 70, 156, 1) 0%, rgba(251, 154, 209, 1) 50%, rgb(250, 97, 148) 100%);
-    background-repeat: no-repeat;
-    height: 100vh;
+    min-height: 100vh; /* Changed from height to min-height */
     width: 100%;
+    /* Removed background-repeat: no-repeat to allow natural extension */
 }
 
 .navStories {
