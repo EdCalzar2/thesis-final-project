@@ -1,9 +1,10 @@
 import { useState } from "react"
 import styles from './form.module.css'
 
-export default function Form({stories, setStories}) {
+export default function Form({ onAddStory }) {
     const [story, setStory] = useState('')
     const [error, setError] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -11,9 +12,17 @@ export default function Form({stories, setStories}) {
             setError("Please enter a story before submitting.")
             return
         }
-        setStories([...stories, story])
+        
+        // Send story to pending queue instead of directly to stories
+        onAddStory(story.trim())
         setStory("")
         setError("")
+        setSuccessMessage("Your story has been submitted and is pending approval!")
+        
+        // Clear success message after 3 seconds
+        setTimeout(() => {
+            setSuccessMessage("")
+        }, 3000)
     }
 
     return (
@@ -24,6 +33,7 @@ export default function Form({stories, setStories}) {
                     onChange={(e) => {
                         setStory(e.target.value)
                         setError("")
+                        setSuccessMessage("")
                     }}
                     type='text'
                     value={story}
@@ -31,21 +41,16 @@ export default function Form({stories, setStories}) {
                 />
                 <button className={styles.modernButton} type='submit'>Submit</button>
             </form>
+            
             {error && (
-                <div
-                    style={{
-                        color: "red",
-                        marginTop: "20px",
-                        textAlign: "center",
-                        width: "fit-content",
-                        padding: "10px",
-                        borderRadius: "5px",
-                        backgroundColor: "white",
-                        marginLeft: "auto",
-                        marginRight: "auto"
-                    }}
-                >
+                <div className={styles.errorMessage}>
                     {error}
+                </div>
+            )}
+            
+            {successMessage && (
+                <div className={styles.successMessage}>
+                    {successMessage}
                 </div>
             )}
         </>
