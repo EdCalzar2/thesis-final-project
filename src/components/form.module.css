@@ -39,3 +39,30 @@
 .inputContainer {
     display: flex;
 }
+
+.errorMessage {
+    color: red;
+    margin-top: 20px;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid red;
+}
+
+.successMessage {
+    color: green;
+    margin-top: 20px;
+    text-align: center;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid green;
+    font-weight: bold;
+}
