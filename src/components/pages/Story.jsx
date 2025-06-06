@@ -3,7 +3,7 @@ import Header from '../Header'
 import Form from '../Form'
 import StoryList from '../StoryList'
 
-export const Story = ({ stories, setStories }) => {
+export const Story = ({ stories, setStories, onAddStory }) => {
     const handleDeleteStory = (storyToDelete) => {
         setStories(stories.filter(story => story !== storyToDelete));
     };
@@ -11,7 +11,7 @@ export const Story = ({ stories, setStories }) => {
     return (
         <div>
             <Header/>
-            <Form stories={stories} setStories={setStories} />
+            <Form onAddStory={onAddStory} />
             <StoryList stories={stories} onDeleteStory={handleDeleteStory} />
         </div>
     )
