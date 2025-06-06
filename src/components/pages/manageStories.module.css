@@ -1,73 +1,185 @@
+/* Existing styles */
 .manageStoriesBackground {
     background: #86469C;
-    background: linear-gradient(0deg, rgb(134, 70, 156) 0%, rgba(251, 154, 209, 1) 50%, rgb(250, 97, 148) 100%);
+    background: linear-gradient(0deg,rgba(134, 70, 156, 1) 0%, rgba(251, 154, 209, 1) 50%, rgb(250, 97, 148) 100%);
     background-repeat: no-repeat;
-    min-height: 100vh;
-    width: 100%;
-}
-
-.manageStoriesBackground nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 20rem;
     height: 100vh;
-    background-color: rgb(255, 251, 242);
-    box-shadow: 0px 3px 10px black;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    z-index: 10;
-}
-
-.manageStoriesBackground ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     width: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
-.manageStoriesBackground li {
-    width: 100%;
-    margin: 0;
-    padding: 0;
+.navStories {
+  margin: 20px 0;
+  margin: 0 auto;
+  margin-bottom: 10rem;
+  padding: 25px;
 }
 
-.manageStoriesBackground ul li a {
-    display: block;
-    border-radius: 0;
-    padding: 25px;
-    margin: 0;
-    color: #333;
-    text-decoration: none;
-    font-weight: 500;
+.navStories ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
 }
 
-.manageStoriesBackground ul li a.active {
-    background-color: rgb(134, 70, 156);
-    font-weight: bold;
-    color: #fff;
+.navStories li a {
+  color: black;
+  text-decoration: none;
+  border-radius: 2;
+  transition: background-color 0.3s;
 }
 
-nav ul li a:not(.active):hover {
-    background-color: rgb(134, 70, 156);
-    color: #fff;
+.navStories li a:hover,
+.navStories li a.active {
+  background-color: rgba(251, 154, 209, 1);
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(134, 70, 156, 0.08);
 }
 
-.logoutBtn {
-    background: #fa6194;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 12px 24px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 12px;
-    width: 100%;
-    text-align: left;
+/* New moderation styles */
+.contentContainer {
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.logoutBtn:hover {
-    background: #c13c6e;
+
+.section {
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.sectionTitle {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 10px;
+}
+
+.storiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.storyCard {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.storyCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.storyHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.storyTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  flex: 1;
+  margin-right: 10px;
+  display: none; /* Hide title since we're only showing story text */
+}
+
+.statusBadge {
+  background: #ffa500;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.statusBadge.approved {
+  background: #28a745;
+}
+
+.storyContent {
+  margin-bottom: 15px;
+}
+
+.storyText {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  max-height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.submissionDate {
+  color: #999;
+  font-size: 12px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.approveButton {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.approveButton:hover {
+  background: #218838;
+}
+
+.rejectButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.rejectButton:hover {
+  background: #c82333;
+}
+
+.deleteButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.deleteButton:hover {
+  background: #c82333;
+}
+
+.emptyMessage {
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  font-style: italic;
+  grid-column: 1 / -1;
+  padding: 40px 20px;
 }
