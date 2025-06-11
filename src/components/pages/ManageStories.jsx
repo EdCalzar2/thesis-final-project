@@ -1,6 +1,6 @@
 import styles from './manageStories.module.css';
-import { NavLink } from 'react-router-dom';
-// import logo from '../../assets/final_logo.png';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
 
 export default function ManageStories({ 
   pendingStories = [], 
@@ -9,22 +9,119 @@ export default function ManageStories({
   onReject, 
   onDelete 
 }) {
+  const navigate = useNavigate();
+  const storyContentRefs = useRef({});
+  const [overflowedStories, setOverflowedStories] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+
+  useEffect(() => {
+    const overflowCheck = {};
+    Object.entries(storyContentRefs.current).forEach(([id, el]) => {
+      if (el) {
+        overflowCheck[id] = el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth;
+      }
+    });
+    setOverflowedStories(overflowCheck);
+  }, [pendingStories, approvedStories]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && modalOpen) {
+        setModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalOpen]);
+
+  const handleLogout = () => {
+    navigate('/');
+  };
+
+  const scrollStoryContent = (id, direction) => {
+    const el = storyContentRefs.current[id];
+    if (!el) return;
+
+    const scrollStep = 100;
+    switch(direction) {
+      case 'up':
+        el.scrollBy({ top: -scrollStep, behavior: 'smooth' });
+        break;
+      case 'down':
+        el.scrollBy({ top: scrollStep, behavior: 'smooth' });
+        break;
+      case 'left':
+        el.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+        break;
+      case 'right':
+        el.scrollBy({ left: scrollStep, behavior: 'smooth' });
+        break;
+    }
+  };
+
+  const openModal = (title, content) => {
+    setModalTitle(title);
+    setModalContent(content);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalContent('');
+    setModalTitle('');
+  };
+
+  const handleModalClick = e => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
+  const ScrollButtons = ({ id }) => (
+    <div className={styles.scrollButtonsContainer}>
+      <button aria-label="Scroll up" className={styles.scrollButton} onClick={() => scrollStoryContent(id, 'up')}>▲</button>
+      <button aria-label="Scroll down" className={styles.scrollButton} onClick={() => scrollStoryContent(id, 'down')}>▼</button>
+      <button aria-label="Scroll left" className={styles.scrollButton} onClick={() => scrollStoryContent(id, 'left')}>◀</button>
+      <button aria-label="Scroll right" className={styles.scrollButton} onClick={() => scrollStoryContent(id, 'right')}>▶</button>
+    </div>
+  );
+
   return (
     <div className={styles.manageStoriesBackground}>
-      {/* <img src={logo} alt="logo" /> */}
+
+      {/* Modal Overlay */}
+      {modalOpen && (
+        <div 
+          className={styles.modalOverlay} 
+          onClick={handleModalClick} 
+          role="dialog" 
+          aria-modal="true" 
+          aria-labelledby="modalTitle"
+          tabIndex={-1}
+        >
+          <div className={styles.modalContent}>
+            <h3 id="modalTitle" className={styles.modalTitle}>{modalTitle}</h3>
+            <div className={styles.modalBody}>{modalContent}</div>
+            <button className={styles.modalCloseButton} onClick={closeModal} aria-label="Close modal">×</button>
+          </div>
+        </div>
+      )}
+
       <nav className={styles.navStories}>
         <ul>
           <li>
             <NavLink 
-              to="/manageStories" 
+              to="/manageStories"
               className={({ isActive }) => isActive ? styles.active : undefined}
             >
               Manage Stories
             </NavLink>
           </li>
           <li>
-            <NavLink 
-              to="/manageSafetyMap" 
+            <NavLink
+              to="/manageSafetyMap"
               className={({ isActive }) => isActive ? styles.active : undefined}
             >
               Manage Safety Map
@@ -33,7 +130,15 @@ export default function ManageStories({
         </ul>
       </nav>
 
+      <button 
+        className={styles.logoutButton} 
+        onClick={handleLogout}
+      >
+        Log Out
+      </button>
+
       <div className={styles.contentContainer}>
+
         {/* Pending Stories Section */}
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
@@ -43,32 +148,36 @@ export default function ManageStories({
             {pendingStories.length === 0 ? (
               <p className={styles.emptyMessage}>No pending stories</p>
             ) : (
-              pendingStories.map((story) => (
+              pendingStories.map(story => (
                 <div key={story.id} className={styles.storyCard}>
                   <div className={styles.storyHeader}>
                     <span className={styles.statusBadge}>Pending</span>
                   </div>
-                  <div className={styles.storyContent}>
+                  <div 
+                    className={styles.storyContentScrollable} 
+                    ref={el => storyContentRefs.current[story.id] = el}
+                    tabIndex={0} 
+                    aria-label="Story content scroll area"
+                  >
                     <p className={styles.storyText}>
-                      {story.text}
+                      {story.text.length > 200 ? story.text.substring(0, 200) + '...' : story.text}
                     </p>
-                    <small className={styles.submissionDate}>
-                      Submitted: {new Date(story.submittedAt).toLocaleDateString()}
-                    </small>
                   </div>
+                  {story.text.length > 200 && (
+                    <button 
+                      className={styles.fullStory} 
+                      onClick={() => openModal('Pending Story', story.text)}
+                    >
+                      See More
+                    </button>
+                  )}
+                  {overflowedStories[story.id] && <ScrollButtons id={story.id} />}
+                  <small className={styles.submissionDate}>
+                    Submitted: {new Date(story.submittedAt).toLocaleDateString()}
+                  </small>
                   <div className={styles.actionButtons}>
-                    <button 
-                      className={styles.approveButton}
-                      onClick={() => onApprove(story.id)}
-                    >
-                      Approve
-                    </button>
-                    <button 
-                      className={styles.rejectButton}
-                      onClick={() => onReject(story.id)}
-                    >
-                      Reject
-                    </button>
+                    <button className={styles.approveButton} onClick={() => onApprove(story.id)}>Approve</button>
+                    <button className={styles.rejectButton} onClick={() => onReject(story.id)}>Reject</button>
                   </div>
                 </div>
               ))
@@ -85,29 +194,39 @@ export default function ManageStories({
             {approvedStories.length === 0 ? (
               <p className={styles.emptyMessage}>No approved stories</p>
             ) : (
-              approvedStories.map((story, index) => (
-                <div key={index} className={styles.storyCard}>
+              approvedStories.map((story, idx) => (
+                <div key={idx} className={styles.storyCard}>
                   <div className={styles.storyHeader}>
                     <span className={`${styles.statusBadge} ${styles.approved}`}>Approved</span>
                   </div>
-                  <div className={styles.storyContent}>
+                  <div
+                    className={styles.storyContentScrollable}
+                    ref={el => storyContentRefs.current[`approved-${idx}`] = el}
+                    tabIndex={0}
+                    aria-label="Story content scroll area"
+                  >
                     <p className={styles.storyText}>
-                      {story}
+                      {story.length > 200 ? story.substring(0, 200) + '...' : story}
                     </p>
                   </div>
-                  <div className={styles.actionButtons}>
+                  {story.length > 200 && (
                     <button 
-                      className={styles.deleteButton}
-                      onClick={() => onDelete(story)}
+                      className={styles.fullStory} 
+                      onClick={() => openModal('Approved Story', story)}
                     >
-                      Delete
+                      See More
                     </button>
+                  )}
+                  {overflowedStories[`approved-${idx}`] && <ScrollButtons id={`approved-${idx}`} />}
+                  <div className={styles.actionButtons}>
+                    <button className={styles.deleteButton} onClick={() => onDelete(story)}>Delete</button>
                   </div>
                 </div>
               ))
             )}
           </div>
         </section>
+
       </div>
     </div>
   );
